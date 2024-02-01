@@ -5,12 +5,14 @@
 [![GitHub license](https://img.shields.io/github/license/r0oth3x49/acloud-dl.svg?style=flat-square)](https://github.com/r0oth3x49/acloud-dl/blob/master/LICENSE)
 
 # acloud-dl
+
 **A cross-platform python based utility to download courses from acloud.guru for personal offline use.**
 
 [![Capture.png](https://s26.postimg.cc/h8nxkvydl/Capture.png)](https://postimg.cc/image/nz4eublj9/)
 
 ## Note
-  - You should run this with python3 (latest preferred), In future updates i will completely remove python2 support.
+
+- You should run this with python3 (latest preferred), In future updates i will completely remove python2 support.
 
 ## ***Features***
 
@@ -35,7 +37,7 @@
 
 ## ***Requirements***
 
-- Python 3.
+- Python 3 (3.9 tested, 3.11 broken)
 - Python `pip`
 - Python module `requests`
 - Python module `colorama`
@@ -53,24 +55,23 @@
 - Kali linux (2017.2)
 - Ubuntu-LTS (64-bit) (tested with super user)
 - Mac OSX 10.9.5 (tested with super user)
- 
+
 ## ***Download acloud-dl***
 
 You can download the latest version of acloud-dl by cloning the GitHub repository.
 
 	git clone https://github.com/r0oth3x49/acloud-dl.git
 
-
 ## ***Usage***
 
 ***Steps before running acloud-dl.py which will list down courses you started***
- - Login to your acloud.guru account via browser.
- - Click on **Browse Courses**.
- - Move mouse to the course you want to download.
- - On mouseover you will see a button "GET" click on that.
- - It Will redirect to the course there is another button "START THIS COURSE" click on that.
- - Done, Now you can use the below usage.
 
+- Login to your acloud.guru account via browser.
+- Click on **Browse Courses**.
+- Move mouse to the course you want to download.
+- On mouseover you will see a button "GET" click on that.
+- It Will redirect to the course there is another button "START THIS COURSE" click on that.
+- Done, Now you can use the below usage.
 
 ***Download a course***
 
@@ -80,7 +81,7 @@ You can download the latest version of acloud-dl by cloning the GitHub repositor
 
     python acloud-dl.py -c file_containing_cookie.txt -a
 
-***Download courses by providing range to start from***
+***Download courses by custom range***
 
     python acloud-dl.py -c file_containing_cookie.txt
     [1] : Advanced AWS CloudFormation
@@ -89,8 +90,8 @@ You can download the latest version of acloud-dl by cloning the GitHub repositor
     [4] : AWS Certified Advanced Networking - Specialty 2020
     [5] : LPIC-1_ System Administrator
     [6] : Mastering AWS CloudFormation
-    [?] : provide range (e.g:- 3+) or select course number between (1/6/all/range): 2+
-  
+    [?] : provide range (e.g:- 1-3,6) or select course number between (1/6/all/range): 2,4-6
+
 ***Download course with specific resolution***
 
     python acloud-dl.py -c file_containing_cookie.txt -q 720
@@ -106,7 +107,6 @@ You can download the latest version of acloud-dl by cloning the GitHub repositor
 ***List down course information***
 
     python acloud-dl.py -c file_containing_cookie.txt --info
-
 
 ## **Advanced Usage**
 
@@ -136,3 +136,24 @@ Advance:
 Example:
   python acloud-dl.py -c cookies.txt
 </code></pre>
+
+## Docker
+
+The app can be executed within a container to avoid dependency issues. Clone the repository then execute following commands from the root location of the project.
+
+***Build Image***
+
+`docker build -t acloud-dl .`
+
+***Run Container***
+
+Assuming cookie file called `cookie.txt` and stored in root of project:
+```
+docker run -v ${PWD}:/opt/app \
+  -u $(id -u ${USER}):$(id -g ${USER}) \
+  -it --rm \
+  acloud-dl -c cookie.txt
+```
+extra options or arguments can be appended as normal. 
+
+Please note, if you're using the `--output` option to specify a specific output directory then ensure that the container has access to these volumes (use additional docker bind-mounts as needed)
